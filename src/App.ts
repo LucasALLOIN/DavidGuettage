@@ -47,7 +47,7 @@ export class AppDiscord {
                 const messageEventObj: MessageEventObj | undefined = onMessageEvent.get(messageArray[0]);
                 if (messageEventObj) {
                     if (messageEventObj.shield) {
-                        const shieldResult: Array<boolean> = await Promise.all(messageEventObj.shield.map((value: RuleFn) => value(message, this)));
+                        const shieldResult: Array<boolean> = await Promise.all(messageEventObj.shield.map((shieldFn: RuleFn) => shieldFn(message, this)));
                         if (shieldResult.indexOf(false) !== -1) {
                             await message.reply(Answers.notAllowed);
                             return
