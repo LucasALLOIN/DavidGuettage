@@ -10,6 +10,8 @@ Currently support:
  - !stop: Stop music.
  - !kill: Kill the bot properly.
  
+ It's also support a shield system, that means you can set rule to check if user is admin for exemple. 
+ 
 # Install manually
 
 You need to set DISCORD_API_TOKEN env variable, for exemple if you are using bash it's:

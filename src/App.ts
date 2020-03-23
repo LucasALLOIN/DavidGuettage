@@ -3,11 +3,13 @@ import {
     Message, StreamDispatcher, VoiceConnection
 } from "discord.js";
 import * as process from "process";
-import {MessageEventFn, onMessageEvent} from "./commands";
+import {MessageEventFn, MessageEventObj, onMessageEvent} from "./commands";
+import {RuleFn} from "./shield/rules";
 
 enum Answers {
     notFound = "Command not found...",
-    dmNotSupported = "Dm are not supported"
+    dmNotSupported = "Dm are not supported",
+    notAllowed = "Sorry but some shield rule(s) forbidden you to do that."
 }
 
 export class AppDiscord {
@@ -42,10 +44,17 @@ export class AppDiscord {
                     return;
                 }
                 const messageArray: Array<string> = message.content.split(" ");
-                const fn: MessageEventFn | undefined = onMessageEvent.get(messageArray[0]);
-                if (fn)
-                    await fn(message, this);
-                else
+                const messageEventObj: MessageEventObj | undefined = onMessageEvent.get(messageArray[0]);
+                if (messageEventObj) {
+                    if (messageEventObj.shield) {
+                        const shieldResult: Array<boolean> = await Promise.all(messageEventObj.shield.map((value: RuleFn) => value(message, this)));
+                        if (shieldResult.indexOf(false) !== -1) {
+                            await message.reply(Answers.notAllowed);
+                            return
+                        }
+                    }
+                    await messageEventObj.eventFn(message, this);
+                } else
                     await message.reply(Answers.notFound)
             }
         })
