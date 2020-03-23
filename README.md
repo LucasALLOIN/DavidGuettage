@@ -2,22 +2,26 @@
 
 A simple Discord bot written in typescript.
 
+For song command, it will search on youtube, so you need an youtube api v3 key.
+
 Currently support:
  - !ping: reply pong.
  - !join: Join a voice channel
- - !play: Play a music (currently only supporting youtube link.).
- - !pause: Pause or resume music.
- - !stop: Stop music.
+ - !play: Add a music to queue (ex: !play Ave Maria).
+ - !next: Play next song in queue.
+ - !replay: Play current song from beginning.
+ - !pause: Pause or resume music (toggle).
  - !kill: Kill the bot properly.
  
  It's also support a shield system, that means you can set rule to check if user is admin for exemple. 
  
 # Install manually
 
-You need to set DISCORD_API_TOKEN env variable, for exemple if you are using bash it's:
+You need to set DISCORD_API_TOKEN & YOUTUBE_API_KEY env variable, for exemple if you are using bash it's:
 
 ```shell script
 export DISCORD_API_TOKEN=YOURTOKEN
+export YOUTUBE_API_KEY=YOURAPIKEY
 ```
 
 Here we go:
@@ -49,5 +53,5 @@ git clone git@github.com:LucasALLOIN/DavidGuettage.git
 cd DavidGuettage
 
 docker build -t davidguettage/latest .
-docker run --env DISCORD_API_TOKEN=YOURTOKEN davidguettage/latest
+docker run --env DISCORD_API_TOKEN=YOURTOKEN --env YOUTUBE_API_KEY=YOURAPIKEY davidguettage/latest
 ```

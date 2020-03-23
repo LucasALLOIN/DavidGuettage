@@ -5,6 +5,7 @@ import {
 import * as process from "process";
 import {MessageEventFn, MessageEventObj, onMessageEvent} from "./commands";
 import {RuleFn} from "./shield/rules";
+import {musicManager} from "./music/musicManager";
 
 enum Answers {
     notFound = "Command not found...",
@@ -68,7 +69,9 @@ export class AppDiscord {
         this._dispatcher = value;
         this._dispatcher?.on("finish", () => {
             this._dispatcher?.destroy();
-            this._dispatcher = undefined
+            this._dispatcher = undefined;
+            musicManager.queue.shift();
+            musicManager.emit("playNext", this)
         })
     }
 
