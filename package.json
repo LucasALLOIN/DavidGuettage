@@ -1,0 +1,22 @@
+{
+  "name": "DavidGuettage",
+  "version": "1.0.0",
+  "main": "build/App.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --no-notify --respawn --transpileOnly ./src/App.ts",
+    "build": "tsc",
+    "start": "node build/App.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.0.2",
+    "ffmpeg-static": "^4.0.1",
+    "ytdl-core": "^2.0.1"
+  },
+  "devDependencies": {
+    "@discordjs/opus": "^0.1.0",
+    "@types/node": "^13.9.3",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
+  }
+}
