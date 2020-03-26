@@ -1,13 +1,14 @@
 import {Message} from "discord.js";
 import {AppDiscord} from "../App";
 import {musicManager} from "../music/musicManager";
+
 const YouTube = require('youtube-node');
 
 const YT: any = new YouTube();
 
 YT.setKey(`${process.env.YOUTUBE_API_KEY}`);
 
-export default async function play(message: Message, app: AppDiscord): Promise<void> {
+export default async function search(message: Message, app: AppDiscord): Promise<void> {
     if (!app.voiceConnection) {
         await message.reply("I need to join a voice channel first, summon me with !join.");
         return
@@ -20,18 +21,18 @@ export default async function play(message: Message, app: AppDiscord): Promise<v
         return
     }
 
-    YT.search(title, 1, {}, (error, result) => {
+    YT.search(title, 5, {}, async (error, result) => {
         if (error)
             console.warn(error);
         else {
             if (result.items[0]) {
-                const videoId: string = result.items[0].id.videoId;
-                const videoTitle: string = result.items[0].snippet.title;
+                await Promise.all(result.items.map(async (item, index) => {
+                    const videoTitle: string = item.snippet.title;
 
-                musicManager.emit("addQueue", {id: videoId, name: videoTitle}, app);
-                message.reply(`Adding **${videoTitle}** to queue. Will be played ${(musicManager.queue.length === 1) ? "now." : `in ${musicManager.queue.length - 1} song(s).`}`);
+                    await message.channel.send(`Found **${videoTitle}** at position ${index + 1}.`)
+                }));
             } else {
-                message.reply(`Error: No music found with **${title}** query.`)
+                await message.reply(`Error: No music found with **${title}** query.`)
             }
         }
     });

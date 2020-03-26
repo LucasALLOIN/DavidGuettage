@@ -1,13 +1,15 @@
 import {Client, Message, VoiceConnection} from "discord.js";
 import {AppDiscord} from "../App";
+import {isAdmin, RuleFn} from "../shield/rules";
 import ping from "./ping";
 import join from "./join";
 import play from "./play";
 import pause from "./pause";
 import kill from "./kill";
 import next from "./next";
-import {isAdmin, RuleFn} from "../shield/rules";
 import replay from "./replay";
+import search from "./search";
+import queue from "./queue";
 
 export type MessageEventFn = (message: Message, app: AppDiscord) => Promise<void>
 export interface MessageEventObj {
@@ -34,6 +36,12 @@ export const onMessageEvent: MessageEventMap = new Map([
     }],
     ["pause", {
         eventFn: pause
+    }],
+    ["search", {
+        eventFn: search
+    }],
+    ["queue", {
+        eventFn: queue
     }],
     ["kill", {
         eventFn: kill,

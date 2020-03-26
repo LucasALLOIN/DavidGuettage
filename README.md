@@ -11,6 +11,8 @@ Currently support:
  - !next: Play next song in queue.
  - !replay: Play current song from beginning.
  - !pause: Pause or resume music (toggle).
+ - !queue: Display the current song queue.
+ - !search: Display the 5 first occurrences on youtube.
  - !kill: Kill the bot properly.
  
  It's also support a shield system, that means you can set rule to check if user is admin for exemple. 
@@ -48,6 +50,7 @@ yarn start
 # Docker installation
 Because we are in 2020.
 
+Doesn't work for now. Perhaps missing opus package in node alpine ?
 ```shell script
 git clone git@github.com:LucasALLOIN/DavidGuettage.git
 cd DavidGuettage
