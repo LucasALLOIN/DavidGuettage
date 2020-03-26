@@ -50,7 +50,6 @@ yarn start
 # Docker installation
 Because we are in 2020.
 
-Doesn't work for now. Perhaps missing opus package in node alpine ?
 ```shell script
 git clone git@github.com:LucasALLOIN/DavidGuettage.git
 cd DavidGuettage
